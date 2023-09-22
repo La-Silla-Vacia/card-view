@@ -1,5 +1,4 @@
 import { FormControl, Grid, MenuItem, Select, Skeleton } from "@mui/material";
-import "@fontsource/manrope";
 import { LabelFilter } from "./shared/filterLabel";
 
 export default function Filters({ filters, loading, setFilters }) {
