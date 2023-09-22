@@ -1,6 +1,6 @@
 import filtersAndOptions from "./getFiltersAndOptions";
 
-export default function parseData(reset, filtersInit, data, settings) {
+export default function parseData(setFilters, filtersInit, data, settings) {
   const parsedData = data.find((item) => item.id === settings.sheet);
 
   if(parsedData){
@@ -22,10 +22,13 @@ export default function parseData(reset, filtersInit, data, settings) {
         : [],
     };
   
+    to_res.profiles = to_res.profiles.filter((item) => {
+      return filtersInit.every((filter) => {
+        return filter.value === "all" || filter.value === item[filter.label];
+      }
+    )})
   
-    reset({
-      filters: filtersAndOptions(filtersInit, to_res.profiles),
-    })
+    setFilters(filtersAndOptions(filtersInit, to_res.profiles))
   
     return to_res
   }else {

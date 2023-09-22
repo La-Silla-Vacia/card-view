@@ -11,6 +11,7 @@ export default function filtersAndOptions(filters, data) {
 
         return {
             label: filter.label,
+            value: "all",
             options: options
         }
     })

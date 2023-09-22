@@ -1,6 +1,5 @@
 import { Container } from "@mui/material";
 // import { useEffect, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
 import Filters from "./components/Filters";
 import initialFilters from "./utils/initialFilters";
 import parseData from "./utils/parseData";
@@ -10,8 +9,9 @@ import { useEffect, useState } from "react";
 import CardsView from "./components/card";
 
 function App() {
-  const [dataset, setDataset] = useState({ profiles: [], colors: [] });
   const script = document.getElementById("dinatar-module");
+  const [dataset, setDataset] = useState({ profiles: [], colors: [] });
+  const [filters, setFilters] = useState(initialFilters(script?.getAttribute("data-filters")));
   const settings = {
     document: script?.getAttribute("data-document"),
     sheet: script?.getAttribute("data-sheet"),
@@ -25,38 +25,35 @@ function App() {
     sheetId: settings.document,
   });
 
+  const handleChangeFilters = (filterName, value) => {
+    const newFilters = filters.map((filter) => {
+      if (filter.label === filterName) {
+        return { ...filter, value: value };
+      } else {
+        return filter;
+      }  
+    });
+
+      setDataset(parseData(setFilters, newFilters, data, settings))
+    setFilters(newFilters);
+  };
 
 
-  const filtersInit = initialFilters(script?.getAttribute("data-filters"));
-
-  const {
-    control,
-    // handleSubmit,
-    // watch,
-    reset,
-    // formState: { errors },
-  } = useForm({
-    defaultValues: {
-      filters: filtersInit,
-    },
-  });
+  // useEffect(() => {
+  // }, [filters, data, settings])
 
   useEffect(() => {
     if(!loading){
-      setDataset(parseData(reset, filtersInit, data, settings))
+      setDataset(parseData(setFilters, filters, data, settings))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading])
 
 
-  const { fields } = useFieldArray({
-    control,
-    name: "filters",
-  });
 
   return (
     <Container maxWidth={"md"}>
-      <Filters filters={fields} loading={loading} />
+      <Filters filters={filters} loading={loading} setFilters={handleChangeFilters} />
       <CardsView dataset={dataset} loading={loading} />
     </Container>
   );

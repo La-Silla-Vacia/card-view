@@ -1,7 +1,9 @@
 import { FormControl, Grid, MenuItem, Select, Skeleton } from "@mui/material";
+import "@fontsource/manrope";
 import { LabelFilter } from "./shared/filterLabel";
 
-export default function Filters({ filters }) {
+export default function Filters({ filters, loading, setFilters }) {
+
   return (
     <Grid container spacing={2} alignItems="flex-end" mt={2}>
       {filters.map((filter, index) => (
@@ -9,13 +11,13 @@ export default function Filters({ filters }) {
           <FormControl fullWidth>
             <LabelFilter gutterBottom>{filter.label}</LabelFilter>
 
-            {filter.options.length == 0 ? (
+            {loading ? (
               <Skeleton variant="rectangular" width="100%" height={40} />
             ) : (
               <Select
-                onChange={() => console.log("change")}
+                onChange={(e) => setFilters(filter.label, e.target.value)}
                 fullWidth
-                value={"all"}
+                value={filter.value}
                 size="small"
               >
                 <MenuItem value="all" selected>
