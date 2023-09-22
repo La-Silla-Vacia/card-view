@@ -13,11 +13,8 @@ export default function ViewOptionCard({ open, selected, handleClose }) {
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
-      sx={{
-        maxHeight: "800px",
-      }}
     >
-      <DialogContent sx={{position:'relative'}}>
+      <DialogContent sx={{ maxHeight:700 }}>
         <Box
           sx={{
             display: "flex",
