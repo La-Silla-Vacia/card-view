@@ -91,7 +91,7 @@ export default function ViewOptionCard({ open, selected, handleClose }) {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} autoFocus variant="contained">
+        <Button onClick={handleClose} variant="contained">
           Cerrar
         </Button>
       </DialogActions>
