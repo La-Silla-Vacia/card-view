@@ -31,8 +31,7 @@ export default function ViewOptionCard({ open, selected, handleClose }) {
             }}
           />
           <Typography
-            variant="h3"
-            component="h2"
+            component="h4"
             sx={{
               letterSpacing: "0em",
               fontSize: "40px",
